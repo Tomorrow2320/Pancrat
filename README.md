@@ -1,2 +1,0 @@
-# Pancrat
-bot
