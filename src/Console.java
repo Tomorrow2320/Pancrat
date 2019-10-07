@@ -10,6 +10,7 @@ public class Console {
 /*
     public ArrayList<String> getCommands() {
         return commands;
+        новый код
     }
 */
     public Console() {
