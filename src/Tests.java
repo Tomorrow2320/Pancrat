@@ -1,30 +1,38 @@
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Tests {
-    public void temperTest() {
-        String input;
-        Scanner in = new Scanner(System.in);
-        QuestBase questBase = new QuestBase("Questions.txt");
-        ArrayList<String> questions = questBase.getQuestions();
-        AnsBase answers = new AnsBase();
-        Counter counter = new Counter();
-        Analyzer analyzer = new Analyzer();
-        Console console = new Console();
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(questions.get(i));
-            input = in.nextLine();
-            if(console.getCommands().contains(input)){
-                console.execute(input);
-                i--;
-                continue;
+    private QuestBase questBase;
+    private AnsBase answers;
+    private int questCount = 0;
+    private Counter counter;
+    private Analyzer analyzer;
+
+    public Tests() {
+        answers = new AnsBase();
+        counter = new Counter();
+        analyzer = new Analyzer();
+        questBase = new QuestBase("Questions.txt"); //разный для разных тестов - решить!!!
+    }
+
+    public void start() {
+        System.out.println(questBase.getQuestions(questCount));
+        questCount++;
+    }
+
+    public void execute(String answer) {
+        if (!answer.equalsIgnoreCase("да") && !answer.equalsIgnoreCase("нет")) {
+            System.out.println("Так да или нет?");
+        } else {
+            answers.add(answer);
+            if (questCount >= questBase.getQuestCount()){
+                System.out.println(analyzer.temperTest(counter.temperTest(answers.getAnswers())));
+                answers.clearAns();
+                questCount = 0;
             }
-            while (!input.equalsIgnoreCase("да") && !input.equalsIgnoreCase("нет")) {
-                System.out.println("Сорре, я не знаю такого ответа(");
-                input = in.nextLine();
+            else {
+                System.out.println(questBase.getQuestions(questCount));
+                questCount++;
             }
-            answers.add(input);
         }
-        analyzer.temperTest(counter.temperTest(answers.getAnswers()));
     }
 }
+

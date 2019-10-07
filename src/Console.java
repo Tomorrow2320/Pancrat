@@ -5,51 +5,58 @@ import java.util.Scanner;
 
 public class Console {
     private static ArrayList<String> commands;
-
-    public ArrayList<String> getCommands(){
+    private Tests tests;
+    private String curState;
+/*
+    public ArrayList<String> getCommands() {
         return commands;
     }
-
-    public Console(){
+*/
+    public Console() {
+        tests = new Tests();
         try (FileReader reader = new FileReader("ConsoleCommands.txt")) {
             Scanner scanner = new Scanner(reader);
             commands = new ArrayList<>();
-            while(scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 commands.add(scanner.nextLine());
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void execute(String command){
+    public void setCurState(String curState) {
+        this.curState = curState;
+    }
+
+    public void execute(String command) {
         switch (command) {
             case "/help":
                 scanPrint("Intro.txt");
                 break;
             case "/test":
                 scanPrint("AboutTemperTest.txt");
-                Tests tests = new Tests();
-                tests.temperTest();
+                tests.start();
+                curState = "test"; //выйти из состояния после конца теста
                 break;
             case "/end":
                 System.exit(0);
                 break;
             default:
-                System.out.println("Сорре, я тебя не понимаю, братец(");
+                if (curState == "test")
+                    tests.execute(command);
+                else System.out.println("Соре, я тебя не понимаю, братец(");
                 break;
         }
     }
 
-    public void scanPrint(String name){
-        try(FileReader reader = new FileReader(name)){
+    public void scanPrint(String name) {
+        try (FileReader reader = new FileReader(name)) {
             Scanner scanner = new Scanner(reader);
-            while(scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 System.out.println(scanner.nextLine());
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }

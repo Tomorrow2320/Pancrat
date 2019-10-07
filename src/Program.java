@@ -9,12 +9,7 @@ public class Program {
         console.scanPrint("Intro.txt");
         while (true) {
             input = in.nextLine();
-            if(console.getCommands().contains(input)){
-                console.execute(input);
-            }
-            else {
-                System.out.println("Сорре, я тебя не понимаю, братец(");
-            }
+            console.execute(input);
         }
     }
 }

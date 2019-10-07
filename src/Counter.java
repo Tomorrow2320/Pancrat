@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Counter {
 
-    public Pair<Integer> temperTest(ArrayList<String> answers){
+    public TTestResult<Integer> temperTest(ArrayList<String> answers){
         int odd = 0;
         int even = 0;
         for(int i = 1; i  <= answers.size(); i++){
@@ -13,6 +13,6 @@ public class Counter {
                 even++;
             }
         }
-        return new Pair<>(odd, even);
+        return new TTestResult<>(odd, even);
     }
 }

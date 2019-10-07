@@ -11,6 +11,9 @@ public class AnsBase {
         return answers;
     }
 
+    public void clearAns (){
+        answers.clear();
+    }
     public void add(String answer) throws IllegalArgumentException{
         if(answer.isEmpty()){
             throw new IllegalArgumentException("Ответ - пустая строка(");
