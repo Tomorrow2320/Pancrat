@@ -11,6 +11,8 @@ public class Console {
     public ArrayList<String> getCommands() {
         return commands;
         новый код
+
+        бреды
     }
 */
     public Console() {
