@@ -14,6 +14,7 @@ public class Console {
 
         бреды
         Бред карины
+        azazaza
     }
 */
     public Console() {
