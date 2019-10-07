@@ -15,6 +15,7 @@ public class Console {
         бреды
         Бред карины
         azazaza
+        fdsafsdafasfd
     }
 */
     public Console() {
