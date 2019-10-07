@@ -13,6 +13,7 @@ public class Console {
         новый код
 
         бреды
+        Бред карины
     }
 */
     public Console() {
