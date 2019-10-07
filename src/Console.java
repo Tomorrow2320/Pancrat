@@ -7,17 +7,7 @@ public class Console {
     private static ArrayList<String> commands;
     private Tests tests;
     private String curState;
-/*
-    public ArrayList<String> getCommands() {
-        return commands;
-        новый код
 
-        бреды
-        Бред карины
-        azazaza
-        fdsafsdafasfd
-    }
-*/
     public Console() {
         tests = new Tests();
         try (FileReader reader = new FileReader("ConsoleCommands.txt")) {
@@ -41,15 +31,21 @@ public class Console {
                 scanPrint("Intro.txt");
                 break;
             case "/test":
-                scanPrint("AboutTemperTest.txt");
-                tests.start();
-                curState = "test"; //выйти из состояния после конца теста
+                if (curState == "test"){
+                    System.out.println("Для начала выйди из текущего теста ;)");
+                }
+                else{
+                    scanPrint("AboutTemperTest.txt");
+                    tests.start();
+                    curState = "test"; //выйти из состояния после конца теста
+                }
                 break;
             case "/end":
                 System.exit(0);
                 break;
             case "/exit":
                 curState = "";
+                System.out.println("Оповещаю, братец: Ты вышел из теста :*");
                 break;
             default:
                 if (curState == "test")
