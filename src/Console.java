@@ -48,6 +48,9 @@ public class Console {
             case "/end":
                 System.exit(0);
                 break;
+            case "/exit":
+                curState = "";
+                break;
             default:
                 if (curState == "test")
                     tests.execute(command);
