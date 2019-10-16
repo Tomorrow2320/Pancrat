@@ -1,68 +1,55 @@
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Console {
-    private static ArrayList<String> commands;
-    private Tests tests;
-    private String curState;
+    private TemperTest temperTest;
 
     public Console() {
-        tests = new Tests();
-        try (FileReader reader = new FileReader("ConsoleCommands.txt")) {
-            Scanner scanner = new Scanner(reader);
-            commands = new ArrayList<>();
-            while (scanner.hasNextLine()) {
-                commands.add(scanner.nextLine());
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+        temperTest = new TemperTest();
     }
 
-    public void setCurState(String curState) {
-        this.curState = curState;
-    }
-
-    public void execute(String command) {
+    public String execute(String command) {
+        String out = "";
         switch (command) {
             case "/help":
-                scanPrint("Intro.txt");
+                out = readFile("Intro.txt");
                 break;
             case "/test":
-                if (curState == "test"){
-                    System.out.println("Для начала выйди из текущего теста ;)");
+                if (temperTest.getState() == "in progress"){
+                    out = "Для начала выйди из текущего теста ;)";
                 }
                 else{
-                    scanPrint("AboutTemperTest.txt");
-                    tests.start();
-                    curState = "test"; //выйти из состояния после конца теста
+                    out = readFile("AboutTemperTest.txt") + temperTest.start();
                 }
                 break;
             case "/end":
                 System.exit(0);
                 break;
             case "/exit":
-                curState = "";
-                System.out.println("Оповещаю, братец: Ты вышел из теста :*");
+                temperTest.clearTest();
+                out = "Оповещаю, братец: Ты вышел из теста :*";
                 break;
             default:
-                if (curState == "test")
-                    tests.execute(command);
-                else System.out.println("Соре, я тебя не понимаю, братец(");
+                if (temperTest.getState() == "in progress"){
+                    out = temperTest.execute(command);
+                }
+                else out = "Соре, я тебя не понимаю, братец(";
                 break;
         }
+        return out;
     }
 
-    public void scanPrint(String name) {
-        try (FileReader reader = new FileReader(name)) {
+    public String readFile(String fileName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (FileReader reader = new FileReader(fileName)) {
             Scanner scanner = new Scanner(reader);
             while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
+                stringBuilder.append(scanner.nextLine() + "\n");
             }
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            return (ex.getMessage());
         }
+        return stringBuilder.toString();
     }
 }

@@ -1,4 +1,3 @@
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ public class QuestBase {
     private int questCount;
     private ArrayList<String> questions;
 
-    public String getQuestions(int i){
+    public String getQuestion(int i){
         return questions.get(i);
     }
 
