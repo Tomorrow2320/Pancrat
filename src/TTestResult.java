@@ -1,17 +1,17 @@
-class TTestResult<T> {
-    private final T odd;
-    private final T even;
+class TTestResult {
+    private final int odd;
+    private final int even;
 
-    public TTestResult(T odd, T even) {
+    public TTestResult(int odd, int even) {
         this.odd = odd;
         this.even = even;
     }
 
-    public T odd() {
+    public int odd() {
         return odd;
     }
 
-    public T even() {
+    public int even() {
         return even;
     }
 }

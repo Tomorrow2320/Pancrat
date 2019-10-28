@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
@@ -5,18 +6,18 @@ import java.util.Scanner;
 public class Console {
     private TemperTest temperTest;
 
-    public Console() {
+    public Console() throws FileNotFoundException {
         temperTest = new TemperTest();
     }
 
-    public String execute(String command) {
+    public String execute(String command) throws FileNotFoundException {
         String out = "";
         switch (command) {
             case "/help":
                 out = readFile("Intro.txt");
                 break;
             case "/test":
-                if (temperTest.getState() == "in progress"){
+                if (temperTest.getState()){
                     out = "Для начала выйди из текущего теста ;)";
                 }
                 else{
@@ -31,7 +32,7 @@ public class Console {
                 out = "Оповещаю, братец: Ты вышел из теста :*";
                 break;
             default:
-                if (temperTest.getState() == "in progress"){
+                if (temperTest.getState()){
                     out = temperTest.execute(command);
                 }
                 else out = "Соре, я тебя не понимаю, братец(";
@@ -40,7 +41,7 @@ public class Console {
         return out;
     }
 
-    public String readFile(String fileName) {
+    public String readFile(String fileName) throws FileNotFoundException {
         StringBuilder stringBuilder = new StringBuilder();
         try (FileReader reader = new FileReader(fileName)) {
             Scanner scanner = new Scanner(reader);
@@ -48,7 +49,7 @@ public class Console {
                 stringBuilder.append(scanner.nextLine() + "\n");
             }
         } catch (IOException ex) {
-            return (ex.getMessage());
+            throw new FileNotFoundException("Файл не существует");
         }
         return stringBuilder.toString();
     }
